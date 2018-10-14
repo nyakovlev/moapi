@@ -1,4 +1,5 @@
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![Spontaneously Talos Education Presents:](https://nyakovlev.github.io/images/loadIcon.png "Encroaching upon a perfectly healthy and independent realm of learning since 2015")
+<br>
 Welcome, CV CyberPatriot teams! This repository is aimed at establishing a home for Ubuntu/Debian scripting.
 
 Scripting is an extremely powerful method for accomplishing the various security tasks of a typical CyberPatriot round. Over the years, a number of students have developed nifty tools to help you knock out vulnerabilities, but documentation for such tools is often quite scarce, and as a result, many individuals shy away from the power of code. This repository is focused towards closing the coding gap between separate CyberPatriot seasons; however, this is a process, and it has yet to be completed. You must be daring and ready to complete tasks and follow instructions on your own. You must be prepared to copy and paste cryptic error messages into Google and experiment with doubtful but hopeful solutions. You must be willing to take independent initiative and decide how YOU want to own this season.
