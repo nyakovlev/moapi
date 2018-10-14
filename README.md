@@ -6,7 +6,7 @@ Scripting is an extremely powerful method for accomplishing the various security
 
 You can also ask Pauley for help - while an independent drive is vital, we're still here for guidance.
 
-While scripting is a challenging skill to learn, it is forever a developing skill, and it is well worth your time and effort.
+While scripting is a challenging skill to learn, anybody can excel in it with some perseverance, and it is well worth your time and effort.
 
 # Installation Instructions
 * Step 0: Make sure you have Ubuntu running somewhere.
