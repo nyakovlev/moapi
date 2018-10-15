@@ -1,0 +1,45 @@
+<div style="text-align: center; overflow: auto;">
+  <video width="640" height="480" controls>
+    <source src="resources/videos/fp_etc_shadow.mp4" type="video/mp4">
+    Video not supported.
+  </video>
+</div>
+<h3>
+  Setting Correct File Permissions on /etc/shadow
+</h3>
+<div class="cite">Referenced from page 321 of <a target="_blank" href="https://drive.google.com/file/d/15on6nqADnFPpG7BkF9hpiQgpI0dTQmIP/view?usp=sharing">CIS Ubuntu Linux 16.04 Benchmark</a></div>
+<p>
+  System files must have correct permissions to ensure that 1) various system utilities and applications can access them as needed, and 2) users or hackers cannot steal data or maliciously modify these files and make them behave unexpectedly.
+</p>
+<br>
+<p>
+  /etc/shadow stores critical security information about user accounts. If a hacker gains access to the file, they can crack password hashes stored in the file, and they can gain information about account status and expiration.
+</p>
+<br>
+<p>
+  <ul>
+    <li>The octal file permission of /etc/shadow must be set to <b>640</b> (-rw-r-----).</li>
+    <li>The owner of /etc/shadow must be <b>root</b> (UID <b>0</b>)</li>
+    <li>The group associated with /etc/shadow must be <b>shadow</b> (GID <b>42</b>)</li>
+  </ul>
+</p>
+<br>
+<p>
+  typing <span class="code_txt">ls -l [filename]</span> or <span class="code_txt">stat [filename]</span> will display the file's current permissions.
+</p>
+<br>
+<p>
+  To change the file permission octal to 640, type <span class="code_txt">sudo chmod 640 /etc/shadow</span>.
+</p>
+<br>
+<p>
+  To change the owner of the file to root, type <span class="code_txt">sudo chown 0 /etc/shadow</span>.
+</p>
+<br>
+<p>
+  To change the file group to shadow, type <span class="code_txt">sudo chgrp 42 /etc/shadow</span>.
+</p>
+<br>
+<p>
+  That should do it!
+</p>

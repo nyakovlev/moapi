@@ -1,0 +1,3 @@
+title: Default log file permissions have been configured for rsyslog
+penalty: False
+resource: None

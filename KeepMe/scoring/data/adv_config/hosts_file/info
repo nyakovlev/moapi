@@ -1,0 +1,3 @@
+title: Hosts file only contains authorized entries
+penalty: False
+resource: None

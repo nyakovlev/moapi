@@ -1,0 +1,3 @@
+title: Apache blocks blacklisted ports
+penalty: False
+resource: None

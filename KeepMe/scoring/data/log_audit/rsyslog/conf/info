@@ -1,0 +1,3 @@
+title: logging rules are properly configured for rsyslog
+penalty: False
+resource: None

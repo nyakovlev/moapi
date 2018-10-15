@@ -1,0 +1,3 @@
+title: UFW is only allowing necessary ports
+penalty: False
+resource: None

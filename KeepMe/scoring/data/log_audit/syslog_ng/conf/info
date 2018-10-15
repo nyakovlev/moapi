@@ -1,0 +1,3 @@
+title: Logging has been properly configured for syslog-ng
+penalty: False
+resource: None

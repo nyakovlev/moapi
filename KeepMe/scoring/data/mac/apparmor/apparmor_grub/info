@@ -1,0 +1,3 @@
+title: AppArmor is not disabled in bootloader configuration
+penalty: False
+resource: None

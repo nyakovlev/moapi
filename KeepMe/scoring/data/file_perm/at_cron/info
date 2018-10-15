@@ -1,0 +1,3 @@
+title: cron is restricted to authorized users
+penalty: False
+resource: None

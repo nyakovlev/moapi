@@ -1,0 +1,36 @@
+<div style="text-align: center; overflow: auto;">
+  <video width="640" height="480" controls>
+    <source src="resources/videos/pass_exp_default.mp4" type="video/mp4">
+    Video not supported.
+  </video>
+</div>
+<h3>
+  Securing Default Password Expiration Values
+</h3>
+<p>
+  Password expiration is configured by editing values in the <span class="code_txt">/etc/login.defs</span> file. Begin this by typing <span class="code_txt">sudo nano /etc/login.defs</span>.
+</p>
+<br>
+<p>
+  Look for three lines in the file: <span class="code_txt">PASS_MAX_DAYS</span>, <span class="code_txt">PASS_MIN_DAYS</span>, and <span class="code_txt">PASS_WARN_AGE</span>. Lines starting with a pound (<span class="code_txt">#</span>) symbol should be ignored. 
+</p>
+<p>
+  NOTE: To make things easier, you can jump to these lines in the file by typing <b>Ctrl+W</b>, typing <b>PASS</b>, and pressing <b>Enter</b>.
+</p>
+<br>
+<p>
+  The meaning behind each of these parameters is explained in the file:<br>
+  <span class="code_txt">PASS_MAX_DAYS</span> is the number of days that can elapse before a user has to change their password. This prevents users from eternally sticking to the same password, which can be a security risk if the password gets discovered.<br>
+  <span class="code_txt">PASS_MIN_DAYS</span> is the number of days that have to elapse after a password change before a user can change it again. If you have password history settings configured (you really should), this prevents a user from repeatedly changing their password until an old one can be used again.<br>
+  <span class="code_txt">PASS_WARN_AGE</span> is the number of days before PASS_MAX_DAYS that a user is urged to change their password.
+</p>
+<br>
+<p>
+  <span class="code_txt">PASS_MAX_DAYS</span> is typically set to 30, 60, 90, or 120 days. In CyberPatriot, we stick to 30 days to be extra-secure.
+</p>
+<p>
+  <span class="code_txt">PASS_MIN_DAYS</span> can be set to 2 days.
+</p>
+<p>
+  <span class="code_txt">PASS_WARN_AGE</span> can be reasonably set to 7 days.
+</p>

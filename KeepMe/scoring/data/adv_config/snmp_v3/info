@@ -1,0 +1,3 @@
+title: Non-default SNMPv3 community strings are in use
+penalty: False
+resource: None

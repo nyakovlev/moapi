@@ -1,0 +1,3 @@
+title: SELinux state has been set to "enforcing"
+penalty: False
+resource: None

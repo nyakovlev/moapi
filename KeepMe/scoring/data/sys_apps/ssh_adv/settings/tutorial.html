@@ -1,0 +1,166 @@
+<div style="text-align: center; overflow: auto;">
+  <video width="640" height="480" controls>
+    <source src="resources/videos/adv_sshd_config.mp4" type="video/mp4">
+    Video not supported.
+  </video>
+</div>
+<h3>
+  Configuring Advanced Settings for SSH Server
+</h3>
+<div class="cite">Referenced from <a target="_blank" href="http://bookofzeus.com/harden-ubuntu/hardening/ssh/">http://bookofzeus.com/harden-ubuntu/hardening/ssh/</a></div>
+<p>
+  These settings help to harden openssh-server on your machine. While it secures quite a bit of your SSH server, certain important fields of SSH security, such as allowing and denying users, limiting IP and port access, generating SSH keys, displaying a login banner and more are not covered in this topic.<br>
+  <b>NOTE:</b> These configurations are only necessary if the sshd service is critical for your system. If an SSH server is not critical, remove it by typing <span class="code_txt">sudo apt-get purge openssh-server</span>.
+</p>
+<br>
+<p>
+  Edit the SSH server configuration file by typing <span class="code_txt">sudo nano /etc/ssh/sshd_config</span>.
+</p>
+<p>
+  Once in the file, secure the parameters shown below by modifying their value:
+</p>
+<div class="table_row">
+  <div class="table_item param_title">Parameter Name</div>
+  <div class="table_item param_default">Default</div>
+  <div class="table_item param_secure">Secure</div>
+  <div class="table_item param_title">Details</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">Port</div>
+  <div class="table_item param_default">22</div>
+  <div class="table_item param_secure">(any unused port)</div>
+  <div class="table_item param_details">Using a non-standard port for SSH reduces the risk of unauthorized entities over the web connecting to your machine. When selecting a port, choose one above 1024 that isn't used by something else (don't use 2222; it's a very common alternative port for SSH).
+</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">Protocol</div>
+  <div class="table_item param_default">2</div>
+  <div class="table_item param_secure">2</div>
+  <div class="table_item param_details">Version 1 of the SSH protocol is riddled with security vulnerabilities; stick to Version 2.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">LogLevel</div>
+  <div class="table_item param_default">INFO</div>
+  <div class="table_item param_secure">VERBOSE</div>
+  <div class="table_item param_details">Setting the LogLevel to VERBOSE instead of INFO allows more security information, such as failed login attempts, to be logged.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">LoginGraceTime</div>
+  <div class="table_item param_default">120</div>
+  <div class="table_item param_secure">30</div>
+  <div class="table_item param_details">Controls how long the server waits before disconnecting a user attempting to login. It is recommended to reduce this time.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">PermitRootLogin</div>
+  <div class="table_item param_default">prohibit-password</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">The root user should never be accessed over SSH (hackers will typically attempt to log in as this user). Instead, those connecting over SSH should login as a normal user and depend on sudo privileges to perform administrative tasks.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">StrictModes</div>
+  <div class="table_item param_default">yes</div>
+  <div class="table_item param_secure">yes</div>
+  <div class="table_item param_details">Setting this to "yes" prevents the usage of insecure home directory and key file permissions.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">RSAAuthentication</div>
+  <div class="table_item param_default">yes</div>
+  <div class="table_item param_secure">yes</div>
+  <div class="table_item param_details">Helps prevent insecure access to user accounts via .rhosts.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">IgnoreRhosts</div>
+  <div class="table_item param_default">yes</div>
+  <div class="table_item param_secure">yes</div>
+  <div class="table_item param_details">Helps prevent insecure access to user accounts via .rhosts.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">RhostsRSAAuthentication</div>
+  <div class="table_item param_default">no</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">Helps prevent insecure access to user accounts via .rhosts.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">HostBasedAuthentication</div>
+  <div class="table_item param_default">no</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">Even though SSH has a cryptographic host-based authentication that's slightly more secure than .rhosts authentication, it is not recommended for hosts to trust one another</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">PermitEmptyPasswords</div>
+  <div class="table_item param_default">no</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">You should never allow a user without a password to log on through SSH.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">X11Forwarding</div>
+  <div class="table_item param_default">yes</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">Enabling this setting allows tunneled network connections, which hackers could potentially use to log into systems.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">PrintLastLog</div>
+  <div class="table_item param_default">yes</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">The username of the last user to log on should be hidden. If an attacker knows a username in the system, they have more information with which they can break in.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">UsePAM</div>
+  <div class="table_item param_default">yes</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">PAM (password authentication) should be disabled if you are using SSH keys. (And you absolutely should be)</div>
+</div>
+<br>
+<p>
+  The below parameters are in the file, but they are commented out with a pound symbol (<b>#</b>). Remove the pound symbol and secure these two settings:
+</p>
+<div class="table_row">
+  <div class="table_item param_title">PasswordAuthentication</div>
+  <div class="table_item param_default">no</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">Using a password to authenticate an SSH connection is not nearly as secure as using a set of SSH keys, which are very difficult to break. This setting should be set to <b>no</b>, and an SSH key pair should be generated.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">MaxStartups</div>
+  <div class="table_item param_default">10:30:60</div>
+  <div class="table_item param_secure">2</div>
+  <div class="table_item param_details">Limits the number of unauthenticated connections to the server at a time. This helps prevent against brute force attacks that attempt to authenticate over parallel connections. The default configuration is 10:30:60, which allows 10 connections at first, then starts dropping 30% of new connections, then hits a maximum of 60 connections.</div>
+</div>
+<br>
+<p>
+  Then, go to the bottom of the file and add the following parameters to the file:
+</p>
+<div class="table_row">
+  <div class="table_item param_title">PermitUserEnvironment</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">Prevents user from presenting environment options to the SSH server, potentially allowing them to bypass some access restrictions.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">UseDNS</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">Setting this to yes might create a latency between the client and the server when establishing a connection. We are applying this setting just in case.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">ClientAliveInterval</div>
+  <div class="table_item param_secure">300</div>
+  <div class="table_item param_details">Reduces the chance of an open SSH session being left unattended.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">ClientAliveCountMax</div>
+  <div class="table_item param_secure">0</div>
+  <div class="table_item param_details">Reduces the chance of an open SSH session being left unattended.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">RhostsAuthentication</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">Helps prevent insecure access to user accounts via .rhosts.</div>
+</div>
+<div class="table_row">
+  <div class="table_item param_title">AllowTcpForwarding</div>
+  <div class="table_item param_secure">no</div>
+  <div class="table_item param_details">Enabling this setting allows tunneled network connections, which hackers could potentially use to log into systems.</div>
+</div>
+<p>
+  Type <b>Ctrl+O</b> to save the file and <b>Ctrl+X</b> to exit (if using nano).<br>
+  Finally, restart the sshd service by typing <span class="code_txt">sudo service sshd restart</span>.
+</p>

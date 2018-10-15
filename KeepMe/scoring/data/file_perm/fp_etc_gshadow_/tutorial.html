@@ -1,0 +1,45 @@
+<div style="text-align: center; overflow: auto;">
+  <video width="640" height="480" controls>
+    <source src="resources/videos/fp_etc_gshadow_.mp4" type="video/mp4">
+    Video not supported.
+  </video>
+</div>
+<h3>
+  Setting Correct File Permissions on /etc/gshadow-
+</h3>
+<div class="cite">Referenced from page 327 of <a target="_blank" href="https://drive.google.com/file/d/15on6nqADnFPpG7BkF9hpiQgpI0dTQmIP/view?usp=sharing">CIS Ubuntu Linux 16.04 Benchmark</a></div>
+<p>
+  System files must have correct permissions to ensure that 1) various system utilities and applications can access them as needed, and 2) users or hackers cannot steal data or maliciously modify these files and make them behave unexpectedly.
+</p>
+<br>
+<p>
+  /etc/gshadow- contains backup security information (such as hashed passwords) for the groups on the system. It must be protected from read and write access.
+</p>
+<br>
+<p>
+  <ul>
+    <li>The octal file permission of /etc/gshadow- must be set to <b>600</b> (-rw-------).</li>
+    <li>The owner of /etc/gshadow- must be <b>root</b> (UID <b>0</b>)</li>
+    <li>The group associated with /etc/gshadow- must be <b>root</b> (GID <b>0</b>)</li>
+  </ul>
+</p>
+<br>
+<p>
+  typing <span class="code_txt">ls -l [filename]</span> or <span class="code_txt">stat [filename]</span> will display the file's current permissions.
+</p>
+<br>
+<p>
+  To change the file permission octal to 600, type <span class="code_txt">sudo chmod 600 /etc/gshadow-</span>.
+</p>
+<br>
+<p>
+  To change the owner of the file to root, type <span class="code_txt">sudo chown 0 /etc/gshadow-</span>.
+</p>
+<br>
+<p>
+  To change the file group to root, type <span class="code_txt">sudo chgrp 0 /etc/gshadow-</span>.
+</p>
+<br>
+<p>
+  That should do it!
+</p>

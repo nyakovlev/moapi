@@ -1,0 +1,3 @@
+title: The system has been configured to ignore incoming rsyslog messages
+penalty: False
+resource: None

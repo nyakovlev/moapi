@@ -1,0 +1,26 @@
+<div style="text-align: center; overflow: auto;">
+  <iframe src="https://drive.google.com/file/d/1VLE2vC3snUySPMs53lvs3OcqmJ5D82ej/preview" width=640 height=480></iframe>
+</div>
+<h3>
+  Removing Telnet
+</h3>
+<div class="cite">Referenced from page 142 of <a target="_blank" href="https://drive.google.com/file/d/15on6nqADnFPpG7BkF9hpiQgpI0dTQmIP/view?usp=sharing">CIS Ubuntu Linux 16.04 Benchmark</a></div>
+<p>
+  Installing various packages can make your system vulnerable to any known or discovered security issues in the software. Hackers trying to gain access to your machine often can take advantage of such security holes in your system's software. For this reason, it is highly recommended to purge anything on your machine that is not required to be there.
+</p>
+<br>
+<p>
+  Telnet is an insecure and unencrypted package that allows users to communicate to a system remotely. It has been replaced by the far more secure SSH protocol. This package will very likely need to be removed. (any telnet servers should certainly be removed as well; however, this tutorial only covers the telnet client)
+</p>
+<br>
+<p>
+  To check if telnet client is installed on your system, you can type <span class="code_txt">dpkg -l telnet</span>.
+</p>
+<br>
+<p>
+  If the name of the package is preceded by "<b>ii</b>", then it is installed. To remove it, simply type <span class="code_txt">sudo apt-get purge telnet</span>.
+</p>
+<br>
+<p>
+  That should be it!
+</p>

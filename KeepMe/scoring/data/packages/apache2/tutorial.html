@@ -1,0 +1,25 @@
+<div style="text-align: center; overflow: auto;">
+  <iframe src="https://drive.google.com/file/d/111ivbxwy5w9adLW_JwE-lCj36UOuEin6/preview" width=640 height=480></iframe>
+</div>
+<h3>
+  Removing Apache HTML server
+</h3>
+<p>
+  Installing various packages can make your system vulnerable to any known or discovered security issues in the software. Hackers trying to gain access to your machine often can take advantage of such security holes in your system's software. For this reason, it is highly recommended to purge anything on your machine that is not required to be there.
+</p>
+<br>
+<p>
+  Apache is an HTML server intended to provide users access to webpages and other resources. If the README specifically instructs you to keep Apache, steps should be taken to secure it, but if no mention is made, Apache should be removed entirely.
+</p>
+<br>
+<p>
+  To check if Apache is installed on your system, you can type <span class="code_txt">dpkg -l | grep apache</span>. (the <b>grep</b> command is to find packages with names containing "apache")
+</p>
+<br>
+<p>
+  If results come up, then Apache is likely installed. To remove Apache, purge the results that return from the above command. (For example: <span class="code_txt">sudo apt-get purge apache2 apache2-bin apache2-data apache2-utils</span>)
+</p>
+<br>
+<p>
+  That should be it!
+</p>

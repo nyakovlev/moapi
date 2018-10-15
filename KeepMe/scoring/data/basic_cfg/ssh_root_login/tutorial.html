@@ -1,0 +1,22 @@
+<div style="text-align: center; overflow: auto;">
+  <iframe src="https://drive.google.com/file/d/13iim3yh7SA_--4AssoD4mHITVGwH0JL9/preview" width=640 height=480></iframe>
+</div>
+<h3>
+  Prohibiting Root Login Over SSH
+</h3>
+<p>
+  Enforcing secure SSH server policies is a critical task when hardening the image, given that the system absolutely needs to be running an SSH server. If such is not the case, you should disregard this hardening task and simply PURGE openssh-server. (<span class="code_txt">sudo apt-get purge openssh-server</span>)<br>
+<b>Note:</b> if the README in the competition image states that sshd is a critical service, then openssh-server must be installed and secured.
+</p>
+<br>
+<p>
+  To prohibit root login over ssh, edit the SSH server configuration file by typing <span class="code_txt">sudo nano /etc/ssh/sshd_config</span>
+</p>
+<br>
+<p>
+  Go down to where it says <span class="code_txt">PermitRootLogin</span> (the default setting is <span class="code_txt">prohibit-password</span>) and change it so that it says <span class="code_txt">PermitRootLogin no</span>.
+</p>
+<br>
+<p>
+  Save the file (<b>Ctrl+O</b>). That should do it!
+</p>

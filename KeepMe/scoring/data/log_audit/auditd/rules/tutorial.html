@@ -1,0 +1,272 @@
+<script>
+  var hov_holds = [];
+  var hold_max = 0;
+  var active_hold = -1;
+  function showBubble(lg) {
+    var chold = hold_max++;
+    hov_holds.push(chold);
+    active_hold = chold;
+    setTimeout(function () {
+      hov_holds.splice(hov_holds.indexOf(chold), 1);
+      if (hov_holds.length == 0) {
+        hold_max = 0;
+      }
+      if (active_hold == chold) {
+        lg.find(".line_bubble").slideDown();
+      }
+    }, 400);
+  }
+  $(document).ready(function () {
+    $(".line_group").mouseenter(function (e) {
+      showBubble($(this));
+    });
+    $(".line_group").mouseleave(function (e) {
+      active_hold = -1;
+      var bubble = $(this).find(".line_bubble");
+      if (bubble.is(":visible")) {
+        bubble.slideUp();
+      }
+    });
+  });
+</script>
+<div style="text-align: center; overflow: auto;">
+  <video width="640" height="480" controls>
+    <source src="resources/videos/auditd_rules.mp4" type="video/mp4">
+    Video not supported.
+  </video>
+</div>
+<h3>
+  Configuring rules for auditd
+</h3>
+<div class="cite">Referenced from pages 202 - 230 of <a target="_blank" href="https://drive.google.com/file/d/15on6nqADnFPpG7BkF9hpiQgpI0dTQmIP/view?usp=sharing">CIS Ubuntu Linux 16.04 Benchmark</a></div>
+<br>
+<div class="note">NOTE: This vulnerability check assumes that your system is 64-bit. Additionally, 4.1.12 (p. 220) is not yet included in this tutorial</div>
+<p>
+  Once auditd has been installed, enabled, and properly configured, you need to specify auditing rules to follow. Such rules need to be set so that audit logs contain any and all necessary data about system security, yet are small enough to be easily read and managed.
+</p>
+<br>
+<p>
+  To modify rules for auditd, type <span class="code_txt">sudo nano /etc/audit/audit.rules</span><br>
+</p>
+<br>
+<p>
+  Before creating new rules for auditd, first ensure that the configuration lines in the file are correct.<br>
+  Aside from comments (lines that start with a "#" symbol):<br>
+  <ul>
+    <li><b>The first line in the file should be <span class="code_txt">-D</span>.</b> This deletes any preexisting rules.</li>
+    <li><b>The second line should be <span class="code_txt">-b 1024</span>.</b> This increases the system's buffers and allows it to survive stress events.</li>
+    <li><b>The last line of the file should be <span class="code_txt">-e 2</span>.</b> This locks the audit configuration, requiring the system to be restarted in order for changes to be made.</li>
+  </ul>
+</p>
+<p>
+  Once that is verified, you can begin adding audit rules to the file. Below are the rules needed in order to capture necessary security information. You can hover over a group of lines to view information on what that particular rule is auditing for.
+</p>
+<br>
+<div class="line_group">
+  -a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change<br>
+  -a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change<br>
+  -a always,exit -F arch=b64 -S clock_settime -k time-change<br>
+  -a always,exit -F arch=b32 -S clock_settime -k time-change<br>
+  -w /etc/localtime -p wa -k time-change<br>
+  <div class="line_bubble">
+    <b>Monitors date and time modification (p. 202)</b><br>
+    Date and time modifications are unusual and could be a sign of malicious activity on the system.
+  </div>
+</div>
+<div class="line_group">
+  -w /etc/group -p wa -k identity<br>
+  -w /etc/passwd -p wa -k identity<br>
+  -w /etc/gshadow -p wa -k identity<br>
+  -w /etc/shadow -p wa -k identity<br>
+  -w /etc/security/opasswd -p wa -k identity<br>
+  <div class="line_bubble">
+    <b>Monitors user and group modification (p. 204)</b><br>
+    Unauthorized user and group editing is an indication that the system has been compromised and the user in question is attempting to hide their activities or compromise other user accounts.
+  </div>
+</div>
+<div class="line_group">
+  -a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale<br>
+  -a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale<br>
+  -w /etc/issue -p wa -k system-locale<br>
+  -w /etc/issue.net -p wa -k system-locale<br>
+  -w /etc/hosts -p wa -k system-locale<br>
+  -w /etc/sysconfig/network -p wa -k system-locale<br>
+  <div class="line_bubble">
+    <b>Monitors system network environment modification (p. 206)</b><br>
+    This audits changes made to the host and domainname of a system. It can break corresponding security parameters and trick users into connecting to unauthorized hosts and potentially provide confidential information to hackers.
+  </div>
+</div>
+<div class="line_group">
+    #SELINUX ONLY<br>
+    -w /etc/selinux/ -p wa -k MAC-policy<br>
+    -w /usr/share/selinux/ -p wa -k MAC-policy<br>
+    #=====<br>
+    #APPARMOR ONLY<br>
+    -w /etc/apparmor/ -p wa -k MAC-policy<br>
+    -w /etc/apparmor.d/ -p wa -k MAC-policy<br>
+    #=====<br>
+  <div class="line_bubble">
+    <b>Monitors mandatory access control (MAC) modifications (p. 209)</b><br>
+    Activity here can indicate that a user is trying to change security contexts and potentially compromise a system. Based on the MAC system you are using (selinux or AppArmor), you should remove one of these entries. (I left both entries in the sample file below; I'm not sure if that will cause any errors or problems)
+  </div>
+</div>
+<div class="line_group">
+  -w /var/log/faillog -p wa -k logins<br>
+  -w /var/log/lastlog -p wa -k logins<br>
+  -w /var/log/tallylog -p wa -k logins<br>
+  <div class="line_bubble">
+    <b>Monitors login and logout events (p. 211)</b><br>
+    Large numbers of this type of log can indicate that a brute force attack occurred at some point. 
+  </div>
+</div>
+<div class="line_group">
+  -w /var/run/utmp -p wa -k session<br>
+  -w /var/log/wtmp -p wa -k logins<br>
+  -w /var/log/btmp -p wa -k logins<br>
+  <div class="line_bubble">
+    <b>Monitors session initiation information (p. 213)</b><br>
+    With session monitoring, you can track logins occuring at unusual hours, a potential sign of an intruder logging in.
+  </div>
+</div>
+<div class="line_group">
+  -a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod<br>
+  -a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod<br>
+  -a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod<br>
+  -a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod<br>
+  -a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod<br>
+  -a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod<br>
+  <div class="line_bubble">
+    <b>Monitors discretionary access control (DAC) permission modification (p. 215)</b><br>
+    Permission modification is a potential indicator of intruder activity or policy violation.
+  </div>
+</div>
+<div class="line_group">
+  -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access<br>
+  -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access<br>
+  -a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access<br>
+  -a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access<br>
+  <div class="line_bubble">
+    <b>Monitors unsuccessful unauthorized file access attempts (p. 218)</b><br>
+    This details any occurrences of a user trying to gain unauthorized file system access.
+  </div>
+</div>
+<div class="line_group">
+  -a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts<br>
+  -a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts<br>
+  <div class="line_bubble">
+    <b>Monitors successful file system mounts (p. 222)</b><br>
+    This logs any incient of a non-privileged user mounting a file system. This is a highly unusual behavior that hints at, but does not prove, writing data to external media. (monitoring data writing can overflow the log file, and it is not recommended or covered is the CIS benchmark)
+  </div>
+</div>
+<div class="line_group">
+  -a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete<br>
+  -a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete<br>
+  <div class="line_bubble">
+    <b>Monitors file deletion events (p. 224)</b><br>
+    Can indicate inappropriate removal of files and file attributes associated with protected files.
+  </div>
+</div>
+<div class="line_group">
+  -w /etc/sudoers -p wa -k scope<br>
+  -w /etc/sudoers.d/ -p wa -k scope<br>
+  <div class="line_bubble">
+    <b>Monitors changes to system administration (sudoers) scope (p. 226)</b><br>
+    Events here indicate that someone is trying to change or limit administrative access to the system.
+  </div>
+</div>
+<div class="line_group">
+  -w /var/log/sudo.log -p wa -k actions<br>
+  <div class="line_bubble">
+    <b>Monitors system administrator actions (sudolog) (p. 228)</b><br>
+    This indicates system admin actions or any attempts to tamper with sudolog. The sudolog file can be compared with audit records to check for discrepancies and potential tampering.
+  </div>
+</div>
+<div class="line_group">
+  -w /sbin/insmod -p x -k modules<br>
+  -w /sbin/rmmod -p x -k modules<br>
+  -w /sbin/modprobe -p x -k modules<br>
+  -a always,exit -F arch=b64 -S init_module -S delete_module -k modules<br>
+  <div class="line_bubble">
+    <b>Monitors kernel module loading and unloading (p. 230)</b><br>
+    monitoring insmod, rmmod, and modprobe could provide evidence that a user loaded or unloaded a kernel module, potentially compromising system security. Monitoring init_module and delete_module reveals the same activity, but performed using a different program.
+  </div>
+</div>
+<br>
+<p>
+  For your convenience, below is a sample audit.rules file that (almost) meets the above requirements and can be copied and pasted with a text editor like <b>gedit</b>:
+</p>
+<br>
+<textarea rows="13" class="cp_file" readonly>
+# This file contains the auditctl rules that are loaded
+# whenever the audit daemon is started via the initscripts.
+# The rules are simply the parameters that would be passed
+# to auditctl.
+
+# First rule - delete all
+-D
+
+# Increase the buffers to survive stress events.
+# Make this bigger for busy systems
+-b 1024
+
+# Feel free to add below this line. See auditctl man page
+
+-a always,exit -F arch=b64 -S adjtimex -S settimeofday -k time-change
+-a always,exit -F arch=b32 -S adjtimex -S settimeofday -S stime -k time-change
+-a always,exit -F arch=b64 -S clock_settime -k time-change 
+-a always,exit -F arch=b32 -S clock_settime -k time-change
+-w /etc/localtime -p wa -k time-change
+-w /etc/group -p wa -k identity
+-w /etc/passwd -p wa -k identity
+-w /etc/gshadow -p wa -k identity
+-w /etc/shadow -p wa -k identity
+-w /etc/security/opasswd -p wa -k identity
+-a always,exit -F arch=b64 -S sethostname -S setdomainname -k system-locale
+-a always,exit -F arch=b32 -S sethostname -S setdomainname -k system-locale
+-w /etc/issue -p wa -k system-locale
+-w /etc/issue.net -p wa -k system-locale
+-w /etc/hosts -p wa -k system-locale
+-w /etc/sysconfig/network -p wa -k system-locale
+#SELINUX ONLY
+-w /etc/selinux/ -p wa -k MAC-policy
+-w /usr/share/selinux/ -p wa -k MAC-policy
+#=====
+#APPARMOR ONLY
+-w /etc/apparmor/ -p wa -k MAC-policy
+-w /etc/apparmor.d/ -p wa -k MAC-policy
+#=====
+-w /var/log/faillog -p wa -k logins
+-w /var/log/lastlog -p wa -k logins
+-w /var/log/tallylog -p wa -k logins
+-w /var/run/utmp -p wa -k session
+-w /var/log/wtmp -p wa -k logins
+-w /var/log/btmp -p wa -k logins
+-a always,exit -F arch=b64 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S chmod -S fchmod -S fchmodat -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S chown -S fchown -S fchownat -S lchown -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b32 -S setxattr -S lsetxattr -S fsetxattr -S removexattr -S lremovexattr -S fremovexattr -F auid>=1000 -F auid!=4294967295 -k perm_mod
+-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b32 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=1000 -F auid!=4294967295 -k access
+-a always,exit -F arch=b64 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+-a always,exit -F arch=b32 -S mount -F auid>=1000 -F auid!=4294967295 -k mounts
+-a always,exit -F arch=b64 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+-a always,exit -F arch=b32 -S unlink -S unlinkat -S rename -S renameat -F auid>=1000 -F auid!=4294967295 -k delete
+-w /etc/sudoers -p wa -k scope
+-w /etc/sudoers.d/ -p wa -k scope
+-w /var/log/sudo.log -p wa -k actions
+-w /sbin/insmod -p x -k modules
+-w /sbin/rmmod -p x -k modules
+-w /sbin/modprobe -p x -k modules
+-a always,exit -F arch=b64 -S init_module -S delete_module -k modules
+
+-e 2
+</textarea>
+<br>
+<p>
+  Press <b>Ctrl+O</b> is nano or <b>Ctrl+S</b> in gedit to save your changes. That should do it!
+</p>
+<br>

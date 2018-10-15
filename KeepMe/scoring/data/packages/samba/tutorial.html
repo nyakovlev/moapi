@@ -1,0 +1,25 @@
+<div style="text-align: center; overflow: auto;">
+  <iframe src="https://drive.google.com/file/d/1Jn_6R1T8LSs1rfeqHwcxDsP6x0TRFvZK/preview" width=640 height=480></iframe>
+</div>
+<h3>
+  Removing Samba
+</h3>
+<p>
+  Installing various packages can make your system vulnerable to any known or discovered security issues in the software. Hackers trying to gain access to your machine often can take advantage of such security holes in your system's software. For this reason, it is highly recommended to purge anything on your machine that is not required to be there.
+</p>
+<br>
+<p>
+  Samba is a software suite that allows Windows-based clients to connect to your machine and access Linux-based resources. Unless specifically required by the README, this program should be removed.
+</p>
+<br>
+<p>
+  To check if Samba is installed on your system, you can type <span class="code_txt">dpkg -l | grep samba</span>. (the <b>grep</b> command is to find packages with names containing "samba")
+</p>
+<br>
+<p>
+  If results come up, then Samba is likely installed. To remove Samba, purge the results that return from the above command. (For example: <span class="code_txt">sudo apt-get purge samba samba-common samba-common-bin python-samba samba-dsdb-modules samba-libs samba-vfs-modules</span>)
+</p>
+<br>
+<p>
+  That should be it!
+</p>

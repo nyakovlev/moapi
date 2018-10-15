@@ -1,0 +1,3 @@
+title: SSH only allows necessary users to log in
+penalty: False
+resource: None

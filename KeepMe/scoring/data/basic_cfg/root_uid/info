@@ -1,0 +1,3 @@
+title: Only root user has UID of 0
+penalty: False
+resource: None
