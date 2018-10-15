@@ -12,7 +12,7 @@ While scripting is a challenging skill to learn, anybody can excel in it with so
 * Step 0: Make sure you have Ubuntu running somewhere.
 * Step 1: Open a terminal and type `git clone https://github.com/nyakovlev/moapi.git`. If it says that the git command isn't recognized, you'll need to install it with `sudo apt-get install git`.
 * Step 2: Enter the directory you just cloned by typing `cd KeepMe`.
-* Step 3: Type `sudo ./install.sh`. This ensures that various dependencies, like Python3.6, websockets, pygame, and Google Chrome are runing on the system.
+* Step 3: Type `chmod 755 install.sh`, then type `sudo ./install.sh`. This ensures that various dependencies, like Python3.6, websockets, pygame, and Google Chrome are runing on the system.
 * Step 4: You're ready to go! To verify functionality of the installation, type `sudo ./scoring_engine.py` or double-click the newly-created **Scoring Engine** icon on your desktop.
 # Using MoaPI
 # Custom Vulnerabilities
