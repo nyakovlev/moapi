@@ -17,7 +17,7 @@ While scripting is a challenging skill to learn, anybody can excel in it with so
 # Using MoaPI
 # Custom Vulnerabilities
 Are you considering adding or completing vulnerabilites to the engine? Are you simply interested in building secret proprietary vulnerabilities for your team alone to use? In either case, we're glad to have you aboard the MoaPI development team!
-Inside `scoring/data`, you'll find all the files used to create the vulnerabilities
+Inside `scoring/data`, you'll find all the files used to create the vulnerabilities.
 ## Creating a New Vulnerability
 ## Editing/Completing Existing Vulnerabilities
 MoaPI contains a great number of potential vulnerabilties, but they have yet to be functional. You can find documentation for programming these vulnerabilities in the <a href='http://bookofzeus.com/harden-ubuntu/'>Book of Zeus</a> and/or the <a href='https://drive.google.com/file/d/15on6nqADnFPpG7BkF9hpiQgpI0dTQmIP/view?usp=sharing'>CIS Ubuntu Security Benchmark</a>.
