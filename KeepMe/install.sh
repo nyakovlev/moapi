@@ -11,6 +11,7 @@ printf "\n\nThank you for using Spontaneously Talos Education's new MoaPI system
 #Install required programs
 apt-get install python2.7 -y
 apt-get install python3.6 -y
+apt-get install python3-pip -y
 python3.6 -m pip install websockets
 python3.6 -m pip install pygame
 dpkg -i google-chrome-stable_current_amd64.deb
