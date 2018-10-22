@@ -1,4 +1,4 @@
 #!/bin/bash
-cd /home/mittromney/Documents/KeepMe/AV18
+cd "$(dirname $0)"
 sudo ./scoring_engine.py
 read
