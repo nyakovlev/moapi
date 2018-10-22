@@ -32,7 +32,7 @@ done <<< $users
 
 #Set permissions for base executables
 find . -name "*.py" -print0 | while read -r -d $'\0' line; do
-  chmod 755 line
+  chmod 755 $line
 done
 chmod 755 start.sh
 chmod -R 755 alias
