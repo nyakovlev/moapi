@@ -20,18 +20,17 @@ apt-get install -f -y
 #Get usernames
 users=$(cat /etc/passwd | awk -F ':' '$3 >= 1000 && $1 != "nobody" {print $1}')
 
-#echo $users | xargs -Ipath sh -c 'cp ./Scoring\ Engine.desktop path/Desktop; chmod 755 path/Desktop/Scoring\ Engine.desktop; echo "Exec=gnome-terminal -e ${PATH}/start.sh" >> path/Desktop/Scoring\ Engine.desktop; printf "\nalias gen-vuln=${PATH}/meta_script/gen-vuln" >> path/.bashrc'
-while read -r user; do
+for user in `echo $users`; do
   #Create desktop shortcut for users
-  cp ./Scoring\ Engine.desktop /home/$user/Desktop
-  echo "Exec=gnome-terminal -e ${PWD}/start.sh" >> /home/$user/Desktop/Scoring\ Engine.desktop
-  chmod 755 /home/$user/Desktop/Scoring\ Engine.desktop
-  chown $user /home/$user/Desktop/Scoring\ Engine.desktop
-  chgrp $user /home/$user/Desktop/Scoring\ Engine.desktop
+  cp "./Scoring Engine.desktop" "/home/$user/Desktop"
+  echo "Exec=gnome-terminal -e ${PWD}/start.sh" >> "/home/${user}/Desktop/Scoring Engine.desktop"
+  chmod 755 "/home/${user}/Desktop/Scoring Engine.desktop"
+  chown $user "/home/${user}/Desktop/Scoring Engine.desktop"
+  chgrp $user "/home/${user}/Desktop/Scoring Engine.desktop"
   #Create alias for Baker script and gen-vuln
   printf "\nalias gen-vuln=${PWD}/alias/gen-vuln" >> $path/.bashrc
   printf "\nalias gen-vuln=${PWD}/alias/baker" >> $path/.bashrc
-done <<< $users
+done
 
 #Set permissions for base executables
 find . -name "*.py" -print0 | while read -r -d $'\0' line; do
