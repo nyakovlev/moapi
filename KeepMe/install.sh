@@ -9,12 +9,14 @@ fi
 printf "\n\nThank you for using Spontaneously Talos Education's new MoaPI system! We hope it doesn't crash or ruin your system.\n\n"
 
 #Install required programs
+sudo add-apt-repository ppa:deadsnakes/ppa -y
+sudo apt-get update
 apt-get install python2.7 -y
-apt-get install python3.6 -y
+sudo apt-get install python3.6 -y
 apt-get install python3-pip -y
 python3.6 -m pip install websockets
 python3.6 -m pip install pygame
-dpkg -i google-chrome-stable_current_amd64.deb
+#dpkg -i google-chrome-stable_current_amd64.deb
 apt-get install -f -y
 
 #Get usernames
