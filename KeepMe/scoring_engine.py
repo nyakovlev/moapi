@@ -252,6 +252,6 @@ async def start():
 
 if __name__ == "__main__":
   user = subprocess.check_output('who', shell=True).decode("utf-8").split()[0]
-  os.system("sudo -u " + user + " google-chrome scoring/score_report.html &")
+  os.system("sudo -u " + user + " firefox scoring/score_report.html &")
   loop.run_until_complete(start())
   loop.run_forever()
