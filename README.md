@@ -15,6 +15,21 @@ While scripting is a challenging skill to learn, anybody can excel in it with so
 * Step 3: Type `chmod 755 install.sh`, then type `sudo ./install.sh`. This ensures that various dependencies, like Python3.6, websockets, pygame, and Google Chrome are runing on the system.
 * Step 4: You're ready to go! To verify functionality of the installation, type `sudo ./scoring_engine.py` or double-click the newly-created **Scoring Engine** icon on your desktop.
 
+# Contribute
+If you have been tasked with adding a vulnerability into this scoring engine, then this is the section for you!
+To start out:
+* Step 1: Create your own version (or branch) of the project and switch your local directory to that branch:
+`git checkout -b <BRANCH_NAME>`
+You may set BRANCH_NAME to whatever you wish.
+* Step 2: Edit the necessary files for your vulnerability. Details on this process are described in the below section, titled **Editing a Vulnerability**.
+* Step 3: Regularly save your progress to github:
+`git push origin <BRANCH_NAME>`
+* Step 4: When you have finished crafting your vulnerability, and everything seems to work as intended, go ahead and create a pull request to the master branch:
+  * Go to the Pull Requests tab at the top of the GitHub page and select "New Pull Request".
+  * Select the branch that contains your newly-created work.
+
+# Editing a Vulnerability
+
 Best wishes!
 
 Nikita Ioukovlev<br>
