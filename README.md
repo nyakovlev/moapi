@@ -27,8 +27,21 @@ You may set BRANCH_NAME to whatever you wish.
 * Step 4: When you have finished crafting your vulnerability, and everything seems to work as intended, go ahead and create a pull request to the master branch:
   * Go to the Pull Requests tab at the top of the GitHub page and select "New Pull Request".
   * Select the branch that contains your newly-created work.
+  * Go through the steps on the page, adding a name and description to the request as you see fit and eventually completing the process.
 
 # Editing a Vulnerability
+Data for each vulnerability in the Scoring engine is stored in **scoring/data**.
+It is helpful to have a browser with the Scoring Engine open as you look through the data. Each folder corresponds to a section in the web interface. For example, "Basic Hardening Tasks" corresponds to the **basic_cfg** folder.
+Work your way down the directory tree until you get to the folder of your vulnerability. Inside this folder, you'll find 3 critical files:
+* **info**: Provides some general data about your vulnerability (including the location of the tutorial page)
+* **script###.py**: Has the actual functionality of your vulnerability; you'll spend just about all of your time here.
+* **tutorial.html**: A file that you can use for a tutorial page
+The script.py file contains three Python functions:
+* **check()**: This function runs every few seconds in the scoring engine. It must return **True** or **False** (True means that the vulnerability has been fixed).
+* **fix()**: This function runs when the fix button for your function is clicked on the page.
+* **reset()**: This function runs when the reset button for your function is clicked on the page.
+Edit the file to give the vulnerability functionality. After saving the file, you'll need to restart the Scoring Engine to test your work.
+Good luck! Contact Pauley if you run into any snags in this process.
 
 Best wishes!
 
