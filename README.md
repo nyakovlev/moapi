@@ -22,7 +22,8 @@ To start out:
 `git checkout -b <BRANCH_NAME>`
 You may set BRANCH_NAME to whatever you wish.
 * Step 2: Edit the necessary files for your vulnerability. Details on this process are described in the below section, titled **Editing a Vulnerability**.
-* Step 3: Regularly save your progress to github:
+* Step 3: Regularly save your progress to github:<br>
+`git commit -m "CHANGE MESSAGE"`<br>
 `git push origin <BRANCH_NAME>`
 * Step 4: When you have finished crafting your vulnerability, and everything seems to work as intended, go ahead and create a pull request to the master branch:
   * Go to the Pull Requests tab at the top of the GitHub page and select "New Pull Request".
