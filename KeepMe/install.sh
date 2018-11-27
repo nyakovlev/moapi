@@ -30,8 +30,7 @@ for user in `echo $users`; do
   chown $user "/home/${user}/Desktop/Scoring Engine.desktop"
   chgrp $user "/home/${user}/Desktop/Scoring Engine.desktop"
   #Create alias for Baker script and gen-vuln
-  printf "\nalias gen-vuln=${PWD}/alias/gen-vuln" >> $path/.bashrc
-  printf "\nalias gen-vuln=${PWD}/alias/baker" >> $path/.bashrc
+  echo "PATH=\${PATH}:${PWD}/alias" >> "/home/${user}/.bashrc"
 done
 
 #Set permissions for base executables
